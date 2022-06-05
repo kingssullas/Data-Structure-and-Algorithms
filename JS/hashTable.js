@@ -9,53 +9,46 @@ let hash = (key, max) => {
 	for (var i = 0; i < key.length; i++) hash += key.charCodeAt(i);
 	return hash % max;
 };
-class HashTable {
-	constructor(storageLimit = 100) {
-		this.storageLimit = storageLimit;
-		this.storage = [];
-	}
-	print() {
-		console.log(this.storage);
-	}
-	add(key, content) {
-		const index = hash(key, this.storageLimit);
-		if (this.storage[index] === undefined)
-			this.storage[index] = [[key, content]];
+let HashTable = function (storageLimit = 100) {
+	storage = [];
+	this.print = () => {
+		console.log(storage);
+	};
+	this.add = (key, content) => {
+		const index = hash(key, storageLimit);
+		if (storage[index] === undefined) storage[index] = [[key, content]];
 		else {
 			var added = false;
-			for (var i = 0; i < this.storage[index].length; i++) {
-				if (this.storage[index][i][0] === key) {
-					this.storage[index][i][1] = content;
+			for (var i = 0; i < storage[index].length; i++) {
+				if (storage[index][i][0] === key) {
+					storage[index][i][1] = content;
 					added = true;
 				}
 			}
-			added || this.storage[index].push([key, content]);
+			added || storage[index].push([key, content]);
 		}
-	}
-	lookup(key) {
-		var index = hash(key, this.storageLimit);
-		if (this.storage[index] === undefined) return undefined;
-		for (var i = 0; i < this.storage[index].length; i++) {
-			if (this.storage[index][i][0] === key)
-				return this.storage[index][i][1];
+	};
+	this.lookup = key => {
+		var index = hash(key, storageLimit);
+		if (storage[index] === undefined) return undefined;
+		for (var i = 0; i < storage[index].length; i++) {
+			if (storage[index][i][0] === key) return storage[index][i][1];
 		}
-	}
-	remove(key) {
-		var index = hash(key, this.storageLimit);
-		if (this.storage[index][0][0] === key && this.storage[index].length === 1)
-			delete this.storage[index];
+	};
+	this.remove = key => {
+		var index = hash(key, storageLimit);
+		if (storage[index][0][0] === key && storage[index].length === 1)
+			delete storage[index];
 		else {
-			for (var i = 0; i < this.storage[index].length; i++)
-				if (this.storage[index][i][0] === key)
-					this.storage[index].splice(i, 1);
+			for (var i = 0; i < storage[index].length; i++)
+				if (storage[index][i][0] === key) storage[index].splice(i, 1);
 		}
-	}
-}
+	};
+};
 
 let ht = new HashTable(4);
 
-/*
-    //test cases
+//test cases
 console.log(hash("quincy", 10));
 ht.add("beau", "person");
 ht.add("fido", "hen");
@@ -67,4 +60,3 @@ console.log(ht.lookup("rex"));
 ht.remove("beau");
 ht.remove("fido");
 ht.print();
-*/
