@@ -10,7 +10,7 @@ let hash = (key, max) => {
 	return hash % max;
 };
 let HashTable = function (storageLimit = 100) {
-	storage = [];
+	var storage = [];
 	this.print = () => {
 		console.log(storage);
 	};
