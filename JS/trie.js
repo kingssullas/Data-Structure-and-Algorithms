@@ -5,19 +5,13 @@
 let Node = function () {
 	this.keys = new Map();
 	this.end = false;
-	this.isEnd = () => {
-		return this.end;
-	};
-	this.setEnd = () => {
-		this.end = true;
-	};
 };
 
 let Trie = function () {
 	this.root = new Node();
 	this.add = (word, node = this.root) => {
 		if (word.length === 0) {
-			node.setEnd();
+			node.end = true;
 			return;
 		} else if (!node.keys.has(word[0])) {
 			node.keys.set(word[0], new Node());
@@ -32,7 +26,7 @@ let Trie = function () {
 				word = word.substr(1);
 			} else return false;
 		}
-		return node.keys.has(word) && node.keys.get(word).isEnd() ? true : false;
+		return node.keys.has(word) && node.keys.get(word).end ? true : false;
 	};
 	this.print = () => {
 		var words = [];
@@ -41,7 +35,7 @@ let Trie = function () {
 				for (let letter of node.keys.keys()) {
 					search(node.keys.get(letter), string.concat(letter));
 				}
-				if (node.isEnd()) {
+				if (node.end) {
 					words.push(string);
 				}
 			} else {
