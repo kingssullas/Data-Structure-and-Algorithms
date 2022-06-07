@@ -6,16 +6,16 @@
 function Stack() {
 	this.count = 0;
 	this.storage = {};
-	this.push = value => {
-		this.storage[this.count++] = value;
+	this.push = e => {
+		this.storage[this.count++] = e;
 	};
 	this.pop = () => {
 		if (this.count === 0) {
 			return undefined;
 		}
-		var value = this.storage[--this.count];
+		var e = this.storage[--this.count];
 		delete this.storage[this.count];
-		return value;
+		return e;
 	};
 	this.peek = () => {
 		return this.storage[this.count - 1];
